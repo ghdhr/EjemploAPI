@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ContosoUniversityDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="CourseID" />
+    </Key>
+    <Property Name="CourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Credits" Type="Int32" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Enrollments" Relationship="Self.FK_CourseID" FromRole="Course" ToRole="Enrollment" />
+  </EntityType>
+  <EntityType Name="Enrollment">
+    <Key>
+      <PropertyRef Name="EnrollmentID" />
+    </Key>
+    <Property Name="EnrollmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Grade" Type="Decimal" Precision="3" Scale="2" Nullable="false" />
+    <Property Name="CourseID" Type="Int32" />
+    <Property Name="StudentID" Type="Int32" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Course" Relationship="Self.FK_CourseID" FromRole="Enrollment" ToRole="Course" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_StudentID" FromRole="Enrollment" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Enrollments" Relationship="Self.FK_StudentID" FromRole="Student" ToRole="Enrollment" />
+  </EntityType>
+  <Association Name="FK_CourseID">
+    <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+    <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="CourseID" />
+      </Principal>
+      <Dependent Role="Enrollment">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentID">
+    <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+    <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Enrollment">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ContosoUniversityDataEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Courses" EntityType="Self.Course" />
+    <EntitySet Name="Enrollments" EntityType="Self.Enrollment" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <AssociationSet Name="FK_CourseID" Association="Self.FK_CourseID">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Enrollment" EntitySet="Enrollments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentID" Association="Self.FK_StudentID">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Enrollment" EntitySet="Enrollments" />
+    </AssociationSet>
+    <FunctionImport Name="Sp_Course_Delete">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Course_Retrieve" ReturnType="Collection(ContosoUniversityDataModel.Sp_Course_Retrieve_Result)">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+      <Parameter Name="pKey" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Courses_AddOrEdit">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+      <Parameter Name="pTitle" Mode="In" Type="String" />
+      <Parameter Name="pCredits" Mode="In" Type="Int32" />
+      <Parameter Name="pRowVersion" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Enrollment_AddOrEdit">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+      <Parameter Name="pGrade" Mode="In" Type="Decimal" />
+      <Parameter Name="pCourseID" Mode="In" Type="Int32" />
+      <Parameter Name="pStudentID" Mode="In" Type="Int32" />
+      <Parameter Name="pRowVersion" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Enrollment_Delete">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Enrollment_Retrieve" ReturnType="Collection(ContosoUniversityDataModel.Sp_Enrollment_Retrieve_Result)">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+      <Parameter Name="pKey" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Student_Delete">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Student_Retrieve" ReturnType="Collection(ContosoUniversityDataModel.Sp_Student_Retrieve_Result)">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+      <Parameter Name="pKey" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Student_AddOrEdit">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+      <Parameter Name="pFirstName" Mode="In" Type="String" />
+      <Parameter Name="pLastName" Mode="In" Type="String" />
+      <Parameter Name="pMiddleName" Mode="In" Type="String" />
+      <Parameter Name="pEnrollmentDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="Sp_Course_Retrieve_Result">
+    <Property Type="Int32" Name="CourseID" Nullable="false" />
+    <Property Type="String" Name="Title" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Credits" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Sp_Enrollment_Retrieve_Result">
+    <Property Type="Int32" Name="EnrollmentID" Nullable="false" />
+    <Property Type="Decimal" Name="Grade" Nullable="false" Precision="3" Scale="2" />
+    <Property Type="String" Name="CourseTittle" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="StudentName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="EnrollmentDate" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="Sp_Student_Retrieve_Result">
+    <Property Type="Int32" Name="StudentID" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="EnrollmentDate" Nullable="true" Precision="23" />
+  </ComplexType>
+</Schema>

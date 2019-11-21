@@ -1,0 +1,2210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InnovationCenterDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUserRoles" Relationship="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetRoles" ToRole="AspNetUserRoles" />
+  </EntityType>
+  <EntityType Name="AspNetUserRole">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetRole" Relationship="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUserRoles" ToRole="AspNetRoles" />
+    <NavigationProperty Name="AspNetUserRoles1" Relationship="Self.FK_AspNetUserRoles_AspNetUserRoles" FromRole="AspNetUserRoles" ToRole="AspNetUserRoles1" />
+    <NavigationProperty Name="AspNetUserRole1" Relationship="Self.FK_AspNetUserRoles_AspNetUserRoles" FromRole="AspNetUserRoles1" ToRole="AspNetUserRoles" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Blog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeUserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_Blog_EmployeeUsers" FromRole="Blog" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Blog_Multimedia" Relationship="Self.FK_Blog_Multimedia_Blog" FromRole="Blog" ToRole="Blog_Multimedia" />
+    <NavigationProperty Name="Blog_Text" Relationship="Self.FK_Blog_Text_Blog" FromRole="Blog" ToRole="Blog_Text" />
+    <NavigationProperty Name="Blog_Tutorial" Relationship="Self.FK_Blog_Tutorial_Blog" FromRole="Blog" ToRole="Blog_Tutorial" />
+  </EntityType>
+  <EntityType Name="Blog_Multimedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BlogId" Type="Int32" Nullable="false" />
+    <Property Name="MultimediaId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Blog" Relationship="Self.FK_Blog_Multimedia_Blog" FromRole="Blog_Multimedia" ToRole="Blog" />
+    <NavigationProperty Name="Multimedia" Relationship="Self.FK_Blog_Multimedia_Multimedia" FromRole="Blog_Multimedia" ToRole="Multimedia" />
+  </EntityType>
+  <EntityType Name="Blog_Text">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BlogId" Type="Int32" Nullable="false" />
+    <Property Name="TextId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Blog" Relationship="Self.FK_Blog_Text_Blog" FromRole="Blog_Text" ToRole="Blog" />
+    <NavigationProperty Name="Text" Relationship="Self.FK_Blog_Text_Blog_Text1" FromRole="Blog_Text" ToRole="Text" />
+  </EntityType>
+  <EntityType Name="Blog_Tutorial">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BlogId" Type="Int32" Nullable="false" />
+    <Property Name="TutorialId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Blog" Relationship="Self.FK_Blog_Tutorial_Blog" FromRole="Blog_Tutorial" ToRole="Blog" />
+    <NavigationProperty Name="Tutorial" Relationship="Self.FK_Blog_Tutorial_Tutorials" FromRole="Blog_Tutorial" ToRole="Tutorials" />
+  </EntityType>
+  <EntityType Name="Calendar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Reason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateHourStart" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DateHourFinalize" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="StatusId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="CalendarTypeId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="CalendarType" Relationship="Self.FK_Calendar_CalendarType" FromRole="Calendar" ToRole="CalendarType" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_Calendar_EmployeeUsers" FromRole="Calendar" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_Calendar_Status" FromRole="Calendar" ToRole="Status" />
+    <NavigationProperty Name="Calendar_Visits" Relationship="Self.FK_Calendar_Visits_Calendar" FromRole="Calendar" ToRole="Calendar_Visits" />
+    <NavigationProperty Name="Calendars_Devices" Relationship="Self.FK_Calendars_Devices_Calendar" FromRole="Calendar" ToRole="Calendars_Devices" />
+    <NavigationProperty Name="Calendars_Inventary" Relationship="Self.FK_Calendars_Inventary_Calendars_Inventary" FromRole="Calendar" ToRole="Calendars_Inventary" />
+    <NavigationProperty Name="InstitutionManagers" Relationship="Self.FK_InstitutionManager_Calendar" FromRole="Calendar" ToRole="InstitutionManager" />
+    <NavigationProperty Name="StudentLists" Relationship="Self.FK_StudentList_Calendar" FromRole="Calendar" ToRole="StudentList" />
+    <NavigationProperty Name="WorkShop_CalendarsVisits" Relationship="Self.FK_WorkShop_CalendarsVisits_CalendarsVisits" FromRole="Calendar" ToRole="WorkShop_CalendarsVisits" />
+  </EntityType>
+  <EntityType Name="Calendar_Visits">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CalendarId" Type="Int32" Nullable="false" />
+    <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Calendar" Relationship="Self.FK_Calendar_Visits_Calendar" FromRole="Calendar_Visits" ToRole="Calendar" />
+    <NavigationProperty Name="Institution" Relationship="Self.FK_Calendar_Visits_Institutions" FromRole="Calendar_Visits" ToRole="Institutions" />
+  </EntityType>
+  <EntityType Name="Calendars_Devices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CalendarId" Type="Int32" Nullable="false" />
+    <Property Name="DeviceId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Calendar" Relationship="Self.FK_Calendars_Devices_Calendar" FromRole="Calendars_Devices" ToRole="Calendar" />
+    <NavigationProperty Name="Device" Relationship="Self.FK_Calendars_Devices_Devices" FromRole="Calendars_Devices" ToRole="Devices" />
+  </EntityType>
+  <EntityType Name="Calendars_Inventary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdCalendar" Type="Int32" Nullable="false" />
+    <Property Name="IdInventary" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Calendar" Relationship="Self.FK_Calendars_Inventary_Calendars_Inventary" FromRole="Calendars_Inventary" ToRole="Calendar" />
+    <NavigationProperty Name="Inventary" Relationship="Self.FK_Calendars_Inventary_Calendars_Inventary1" FromRole="Calendars_Inventary" ToRole="Inventary" />
+  </EntityType>
+  <EntityType Name="CalendarsVisit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+    <Property Name="DateHourStart" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DateHourFinalize" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="StatusId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_Calendars_Visits_EmployeeUsers" FromRole="CalendarsVisits" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Institution" Relationship="Self.FK_Calendars_Visits_InstitutionManagers" FromRole="CalendarsVisits" ToRole="Institutions" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_CalendarsVisits_Status" FromRole="CalendarsVisits" ToRole="Status" />
+  </EntityType>
+  <EntityType Name="CalendarTmp">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Reason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateHourStart" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DateHourFinalize" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="StatusId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="CalendarTypeId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_CalendarTmp_EmployeeUsers" FromRole="CalendarTmp" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_CalendarTmp_Status" FromRole="CalendarTmp" ToRole="Status" />
+  </EntityType>
+  <EntityType Name="CalendarType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Calendars" Relationship="Self.FK_Calendar_CalendarType" FromRole="CalendarType" ToRole="Calendar" />
+  </EntityType>
+  <EntityType Name="Configuration">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InsertDate" Type="DateTime" Precision="3" />
+    <Property Name="InsertUserId" Type="Int32" />
+    <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RegionId" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Region" Relationship="Self.FK_Countries_Regions" FromRole="Countries" ToRole="Regions" />
+    <NavigationProperty Name="Locations" Relationship="Self.FK_Locations_Countries" FromRole="Countries" ToRole="Locations" />
+  </EntityType>
+  <EntityType Name="Device">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Station" Type="Int32" Nullable="false" />
+    <Property Name="LocationId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Calendars_Devices" Relationship="Self.FK_Calendars_Devices_Devices" FromRole="Devices" ToRole="Calendars_Devices" />
+    <NavigationProperty Name="Location" Relationship="Self.FK_Devices_Locations" FromRole="Devices" ToRole="Locations" />
+    <NavigationProperty Name="Files_Devices" Relationship="Self.FK_Files_Devices_Devices" FromRole="Devices" ToRole="Files_Devices" />
+  </EntityType>
+  <EntityType Name="EmployeeUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Position" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Department" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+    <Property Name="Mayor" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LocationId" Type="Int32" Nullable="false" />
+    <Property Name="SexId" Type="Int32" Nullable="false" />
+    <Property Name="LanguageId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Blogs" Relationship="Self.FK_Blog_EmployeeUsers" FromRole="EmployeeUsers" ToRole="Blog" />
+    <NavigationProperty Name="Calendars" Relationship="Self.FK_Calendar_EmployeeUsers" FromRole="EmployeeUsers" ToRole="Calendar" />
+    <NavigationProperty Name="CalendarsVisits" Relationship="Self.FK_Calendars_Visits_EmployeeUsers" FromRole="EmployeeUsers" ToRole="CalendarsVisits" />
+    <NavigationProperty Name="CalendarTmps" Relationship="Self.FK_CalendarTmp_EmployeeUsers" FromRole="EmployeeUsers" ToRole="CalendarTmp" />
+    <NavigationProperty Name="Institution" Relationship="Self.FK_EmployeeUsers_Institutions" FromRole="EmployeeUsers" ToRole="Institutions" />
+    <NavigationProperty Name="Language" Relationship="Self.FK_EmployeeUsers_Languages" FromRole="EmployeeUsers" ToRole="Languages" />
+    <NavigationProperty Name="Location" Relationship="Self.FK_EmployeeUsers_Locations" FromRole="EmployeeUsers" ToRole="Locations" />
+    <NavigationProperty Name="Sex" Relationship="Self.FK_EmployeeUsers_Sexes" FromRole="EmployeeUsers" ToRole="Sexes" />
+    <NavigationProperty Name="ErrorReportHardwares" Relationship="Self.FK_ErrorReportsHardware_EmployeeUsers" FromRole="EmployeeUsers" ToRole="ErrorReportHardware" />
+    <NavigationProperty Name="ErrorReportWebs" Relationship="Self.FK_ErrorReportWeb_EmployeeUsers" FromRole="EmployeeUsers" ToRole="ErrorReportWeb" />
+    <NavigationProperty Name="Medals" Relationship="Self.FK_Medals_EmployeeUsers" FromRole="EmployeeUsers" ToRole="Medals" />
+    <NavigationProperty Name="Petitions" Relationship="Self.FK_Petition_EmployeeUsers" FromRole="EmployeeUsers" ToRole="Petition" />
+    <NavigationProperty Name="Project_Users" Relationship="Self.FK_Project_Users_EmployeeUsers" FromRole="EmployeeUsers" ToRole="Project_Users" />
+    <NavigationProperty Name="Questions_Users" Relationship="Self.FK_Questions_Users_EmployeeUsers" FromRole="EmployeeUsers" ToRole="Questions_Users" />
+    <NavigationProperty Name="WorkShopManagers" Relationship="Self.FK_WorkShopManagers_EmployeeUsers" FromRole="EmployeeUsers" ToRole="WorkShopManagers" />
+  </EntityType>
+  <EntityType Name="ErrorReportHardware">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MagnitudeId" Type="Int32" Nullable="false" />
+    <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="locationId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="StatusId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_ErrorReportsHardware_EmployeeUsers" FromRole="ErrorReportHardware" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Location" Relationship="Self.FK_ErrorReportHardware_Locations" FromRole="ErrorReportHardware" ToRole="Locations" />
+    <NavigationProperty Name="Magniture" Relationship="Self.FK_ErrorReportHardware_Magniture" FromRole="ErrorReportHardware" ToRole="Magniture" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_ErrorReportHardware_Status" FromRole="ErrorReportHardware" ToRole="Status" />
+    <NavigationProperty Name="Status1" Relationship="Self.FK_ErrorReportsHardware_ErrorReports" FromRole="ErrorReportHardware" ToRole="Status" />
+  </EntityType>
+  <EntityType Name="ErrorReportWeb">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ExceptionName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MagnitudeId" Type="Int32" Nullable="false" />
+    <Property Name="LanguajeId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="StatusId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_ErrorReportWeb_EmployeeUsers" FromRole="ErrorReportWeb" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Language" Relationship="Self.FK_ErrorReportWeb_Languages" FromRole="ErrorReportWeb" ToRole="Languages" />
+    <NavigationProperty Name="Magniture" Relationship="Self.FK_ErrorReportWeb_Magniture" FromRole="ErrorReportWeb" ToRole="Magniture" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_ErrorReportWeb_Status" FromRole="ErrorReportWeb" ToRole="Status" />
+  </EntityType>
+  <EntityType Name="File">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Size" Type="Int32" Nullable="false" />
+    <Property Name="FolderId" Type="Int32" Nullable="false" />
+    <Property Name="ProjectId" Type="Int32" Nullable="false" />
+    <Property Name="PrototypeId" Type="Int32" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Folder" Relationship="Self.FK_Files_Folder" FromRole="Files" ToRole="Folder" />
+    <NavigationProperty Name="Project" Relationship="Self.FK_Files_Projects" FromRole="Files" ToRole="Projects" />
+    <NavigationProperty Name="Prototype" Relationship="Self.FK_Files_Prototypes1" FromRole="Files" ToRole="Prototypes" />
+  </EntityType>
+  <EntityType Name="Files_Devices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileId" Type="Int32" Nullable="false" />
+    <Property Name="DeviceId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Device" Relationship="Self.FK_Files_Devices_Devices" FromRole="Files_Devices" ToRole="Devices" />
+    <NavigationProperty Name="FilesSupport" Relationship="Self.FK_Files_Devices_FilesSupports" FromRole="Files_Devices" ToRole="FilesSupports" />
+  </EntityType>
+  <EntityType Name="FilesSupport">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="File" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Files_Devices" Relationship="Self.FK_Files_Devices_FilesSupports" FromRole="FilesSupports" ToRole="Files_Devices" />
+  </EntityType>
+  <EntityType Name="Folder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="FolderMainId" Type="Int32" Nullable="false" />
+    <Property Name="ProjectId" Type="Int32" Nullable="false" />
+    <Property Name="PrototypeId" Type="Int32" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Files" Relationship="Self.FK_Files_Folder" FromRole="Folder" ToRole="Files" />
+    <NavigationProperty Name="Folder1" Relationship="Self.FK_Folder_Folder" FromRole="Folder" ToRole="Folder1" />
+    <NavigationProperty Name="Folder2" Relationship="Self.FK_Folder_Folder" FromRole="Folder1" ToRole="Folder" />
+    <NavigationProperty Name="Project" Relationship="Self.FK_Folder_Projects" FromRole="Folder" ToRole="Projects" />
+    <NavigationProperty Name="Prototype" Relationship="Self.FK_Folder_Prototypes" FromRole="Folder" ToRole="Prototypes" />
+  </EntityType>
+  <EntityType Name="Goal">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Condition" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+    <Property Name="Limit" Type="Int32" Nullable="false" />
+    <Property Name="reward" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Medals" Relationship="Self.FK_Medals_Goals" FromRole="Goals" ToRole="Medals" />
+  </EntityType>
+  <EntityType Name="HelpType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Prototypes" Relationship="Self.FK_Prototype_HelpType" FromRole="HelpType" ToRole="Prototypes" />
+  </EntityType>
+  <EntityType Name="InnovationsCenter">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LocationId" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Location" Relationship="Self.FK_InnovationsCenters_Locations" FromRole="InnovationsCenters" ToRole="Locations" />
+  </EntityType>
+  <EntityType Name="InstitutionManager">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CalendarId" Type="Int32" Nullable="false" />
+    <Property Name="PersonVisitId" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Calendar" Relationship="Self.FK_InstitutionManager_Calendar" FromRole="InstitutionManager" ToRole="Calendar" />
+    <NavigationProperty Name="PersonVisit" Relationship="Self.FK_InstitutionManager_PersonVisit" FromRole="InstitutionManager" ToRole="PersonVisit" />
+  </EntityType>
+  <EntityType Name="Institution">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LocationId" Type="Int32" Nullable="false" />
+    <Property Name="allowed" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Calendar_Visits" Relationship="Self.FK_Calendar_Visits_Institutions" FromRole="Institutions" ToRole="Calendar_Visits" />
+    <NavigationProperty Name="CalendarsVisits" Relationship="Self.FK_Calendars_Visits_InstitutionManagers" FromRole="Institutions" ToRole="CalendarsVisits" />
+    <NavigationProperty Name="EmployeeUsers" Relationship="Self.FK_EmployeeUsers_Institutions" FromRole="Institutions" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Location" Relationship="Self.FK_Institutions_Locations" FromRole="Institutions" ToRole="Locations" />
+  </EntityType>
+  <EntityType Name="Inventary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Barcode" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InitialAmount" Type="Int32" Nullable="false" />
+    <Property Name="CurrentAmount" Type="Int32" Nullable="false" />
+    <Property Name="Accountant" Type="Boolean" Nullable="false" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Calendars_Inventary" Relationship="Self.FK_Calendars_Inventary_Calendars_Inventary1" FromRole="Inventary" ToRole="Calendars_Inventary" />
+    <NavigationProperty Name="InventaryCategory" Relationship="Self.FK_Inventary_InventaryCategory" FromRole="Inventary" ToRole="InventaryCategory" />
+    <NavigationProperty Name="WorkShop_Inventary" Relationship="Self.FK_WorkShop_Inventary_Inventary" FromRole="Inventary" ToRole="WorkShop_Inventary" />
+  </EntityType>
+  <EntityType Name="InventaryCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Inventaries" Relationship="Self.FK_Inventary_InventaryCategory" FromRole="InventaryCategory" ToRole="Inventary" />
+  </EntityType>
+  <EntityType Name="Language">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="EmployeeUsers" Relationship="Self.FK_EmployeeUsers_Languages" FromRole="Languages" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="ErrorReportWebs" Relationship="Self.FK_ErrorReportWeb_Languages" FromRole="Languages" ToRole="ErrorReportWeb" />
+    <NavigationProperty Name="Multimedias" Relationship="Self.FK_Multimedia_Languages" FromRole="Languages" ToRole="Multimedia" />
+    <NavigationProperty Name="Texts" Relationship="Self.FK_Parraf_Languages" FromRole="Languages" ToRole="Text" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Street_Adress" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Postal_Code" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProvinceId" Type="Int32" Nullable="false" />
+    <Property Name="Contry_Id" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_Locations_Countries" FromRole="Locations" ToRole="Countries" />
+    <NavigationProperty Name="Devices" Relationship="Self.FK_Devices_Locations" FromRole="Locations" ToRole="Devices" />
+    <NavigationProperty Name="EmployeeUsers" Relationship="Self.FK_EmployeeUsers_Locations" FromRole="Locations" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="ErrorReportHardwares" Relationship="Self.FK_ErrorReportHardware_Locations" FromRole="Locations" ToRole="ErrorReportHardware" />
+    <NavigationProperty Name="InnovationsCenters" Relationship="Self.FK_InnovationsCenters_Locations" FromRole="Locations" ToRole="InnovationsCenters" />
+    <NavigationProperty Name="Institutions" Relationship="Self.FK_Institutions_Locations" FromRole="Locations" ToRole="Institutions" />
+    <NavigationProperty Name="Province" Relationship="Self.FK_Locations_Provinces" FromRole="Locations" ToRole="Provinces" />
+  </EntityType>
+  <EntityType Name="Magniture">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ErrorReportHardwares" Relationship="Self.FK_ErrorReportHardware_Magniture" FromRole="Magniture" ToRole="ErrorReportHardware" />
+    <NavigationProperty Name="ErrorReportWeb" Relationship="Self.FK_ErrorReportWeb_Magniture" FromRole="Magniture" ToRole="ErrorReportWeb" />
+  </EntityType>
+  <EntityType Name="Medal">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GoalsId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_Medals_EmployeeUsers" FromRole="Medals" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Goal" Relationship="Self.FK_Medals_Goals" FromRole="Medals" ToRole="Goals" />
+  </EntityType>
+  <EntityType Name="Multimedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Index" Type="Int32" Nullable="false" />
+    <Property Name="LanguajeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Blog_Multimedia" Relationship="Self.FK_Blog_Multimedia_Multimedia" FromRole="Multimedia" ToRole="Blog_Multimedia" />
+    <NavigationProperty Name="Language" Relationship="Self.FK_Multimedia_Languages" FromRole="Multimedia" ToRole="Languages" />
+    <NavigationProperty Name="Petition_Multimedia" Relationship="Self.FK_Petition_Multimedia_Multimedia" FromRole="Multimedia" ToRole="Petition_Multimedia" />
+  </EntityType>
+  <EntityType Name="PersonVisit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="genre" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="InstitutionManagers" Relationship="Self.FK_InstitutionManager_PersonVisit" FromRole="PersonVisit" ToRole="InstitutionManager" />
+    <NavigationProperty Name="StudentLists" Relationship="Self.FK_StudentList_StudentList1" FromRole="PersonVisit" ToRole="StudentList" />
+  </EntityType>
+  <EntityType Name="Petition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Content" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="StatusId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ArriveDate" Type="DateTime" Precision="0" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_Petition_EmployeeUsers" FromRole="Petition" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Petition_Multimedia" Relationship="Self.FK_Petition_Multimedia_Petition" FromRole="Petition" ToRole="Petition_Multimedia" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_Petition_Status" FromRole="Petition" ToRole="Status" />
+  </EntityType>
+  <EntityType Name="Petition_Multimedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PetitionId" Type="Int32" Nullable="false" />
+    <Property Name="MultimediaId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Multimedia" Relationship="Self.FK_Petition_Multimedia_Multimedia" FromRole="Petition_Multimedia" ToRole="Multimedia" />
+    <NavigationProperty Name="Petition" Relationship="Self.FK_Petition_Multimedia_Petition" FromRole="Petition_Multimedia" ToRole="Petition" />
+  </EntityType>
+  <EntityType Name="Project_Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdProject" Type="Int32" Nullable="false" />
+    <Property Name="IdUser" Type="Int32" Nullable="false" />
+    <Property Name="RolUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mayor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_Project_Users_EmployeeUsers" FromRole="Project_Users" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Project" Relationship="Self.FK_Project_Users_Projects" FromRole="Project_Users" ToRole="Projects" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Purpose" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="View" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Scope" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Private" Type="Boolean" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Files" Relationship="Self.FK_Files_Projects" FromRole="Projects" ToRole="Files" />
+    <NavigationProperty Name="Folders" Relationship="Self.FK_Folder_Projects" FromRole="Projects" ToRole="Folder" />
+    <NavigationProperty Name="Project_Users" Relationship="Self.FK_Project_Users_Projects" FromRole="Projects" ToRole="Project_Users" />
+    <NavigationProperty Name="Prototypes" Relationship="Self.FK_Prototypes_Projects" FromRole="Projects" ToRole="Prototypes" />
+  </EntityType>
+  <EntityType Name="Prototype">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="WorkToDoId" Type="Int32" Nullable="false" />
+    <Property Name="HelpTypeId" Type="Int32" Nullable="false" />
+    <Property Name="HelpSpecification" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Private" Type="Boolean" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="ProyectId" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Files" Relationship="Self.FK_Files_Prototypes1" FromRole="Prototypes" ToRole="Files" />
+    <NavigationProperty Name="Folders" Relationship="Self.FK_Folder_Prototypes" FromRole="Prototypes" ToRole="Folder" />
+    <NavigationProperty Name="HelpType" Relationship="Self.FK_Prototype_HelpType" FromRole="Prototypes" ToRole="HelpType" />
+    <NavigationProperty Name="Project" Relationship="Self.FK_Prototypes_Projects" FromRole="Prototypes" ToRole="Projects" />
+    <NavigationProperty Name="WorkingToDo" Relationship="Self.FK_Prototype_WorkingToDo" FromRole="Prototypes" ToRole="WorkingToDo" />
+  </EntityType>
+  <EntityType Name="Province">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Locations" Relationship="Self.FK_Locations_Provinces" FromRole="Provinces" ToRole="Locations" />
+  </EntityType>
+  <EntityType Name="Questions_Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SecurityQuestionId" Type="Int32" Nullable="false" />
+    <Property Name="AnswerId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_Questions_Users_EmployeeUsers" FromRole="Questions_Users" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="SecurityAnswer" Relationship="Self.FK_Questions_Users_SecurityAnswers" FromRole="Questions_Users" ToRole="SecurityAnswers" />
+    <NavigationProperty Name="SecurityQuestion" Relationship="Self.FK_Questions_Users_SecurityQuestions" FromRole="Questions_Users" ToRole="SecurityQuestions" />
+  </EntityType>
+  <EntityType Name="Region">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Countries" Relationship="Self.FK_Countries_Regions" FromRole="Regions" ToRole="Countries" />
+  </EntityType>
+  <EntityType Name="SecurityAnswer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Answer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Questions_Users" Relationship="Self.FK_Questions_Users_SecurityAnswers" FromRole="SecurityAnswers" ToRole="Questions_Users" />
+  </EntityType>
+  <EntityType Name="SecurityQuestion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Question" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Questions_Users" Relationship="Self.FK_Questions_Users_SecurityQuestions" FromRole="SecurityQuestions" ToRole="Questions_Users" />
+  </EntityType>
+  <EntityType Name="Sex">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EmployeeUsers" Relationship="Self.FK_EmployeeUsers_Sexes" FromRole="Sexes" ToRole="EmployeeUsers" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Calendars" Relationship="Self.FK_Calendar_Status" FromRole="Status" ToRole="Calendar" />
+    <NavigationProperty Name="CalendarsVisits" Relationship="Self.FK_CalendarsVisits_Status" FromRole="Status" ToRole="CalendarsVisits" />
+    <NavigationProperty Name="CalendarTmps" Relationship="Self.FK_CalendarTmp_Status" FromRole="Status" ToRole="CalendarTmp" />
+    <NavigationProperty Name="ErrorReportHardwares" Relationship="Self.FK_ErrorReportHardware_Status" FromRole="Status" ToRole="ErrorReportHardware" />
+    <NavigationProperty Name="ErrorReportHardwares1" Relationship="Self.FK_ErrorReportsHardware_ErrorReports" FromRole="Status" ToRole="ErrorReportHardware" />
+    <NavigationProperty Name="ErrorReportWebs" Relationship="Self.FK_ErrorReportWeb_Status" FromRole="Status" ToRole="ErrorReportWeb" />
+    <NavigationProperty Name="Petitions" Relationship="Self.FK_Petition_Status" FromRole="Status" ToRole="Petition" />
+  </EntityType>
+  <EntityType Name="StudentList">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonVisitId" Type="Int32" Nullable="false" />
+    <Property Name="CalendarId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Calendar" Relationship="Self.FK_StudentList_Calendar" FromRole="StudentList" ToRole="Calendar" />
+    <NavigationProperty Name="PersonVisit" Relationship="Self.FK_StudentList_StudentList1" FromRole="StudentList" ToRole="PersonVisit" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Text">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Index" Type="Int32" Nullable="false" />
+    <Property Name="LanguajeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Blog_Text" Relationship="Self.FK_Blog_Text_Blog_Text1" FromRole="Text" ToRole="Blog_Text" />
+    <NavigationProperty Name="Language" Relationship="Self.FK_Parraf_Languages" FromRole="Text" ToRole="Languages" />
+  </EntityType>
+  <EntityType Name="Tutorial">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Difficult" Type="Int32" Nullable="false" />
+    <Property Name="Time" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Blog_Tutorial" Relationship="Self.FK_Blog_Tutorial_Tutorials" FromRole="Tutorials" ToRole="Blog_Tutorial" />
+  </EntityType>
+  <EntityType Name="WorkingToDo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Prototypes" Relationship="Self.FK_Prototype_WorkingToDo" FromRole="WorkingToDo" ToRole="Prototypes" />
+  </EntityType>
+  <EntityType Name="WorkShop_CalendarsVisits">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CalendarsId" Type="Int32" Nullable="false" />
+    <Property Name="WorkShopId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Calendar" Relationship="Self.FK_WorkShop_CalendarsVisits_CalendarsVisits" FromRole="WorkShop_CalendarsVisits" ToRole="Calendar" />
+    <NavigationProperty Name="Workshop" Relationship="Self.FK_WorkShop_CalendarsVisits_Workshop" FromRole="WorkShop_CalendarsVisits" ToRole="Workshops" />
+  </EntityType>
+  <EntityType Name="WorkShop_Inventary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WorkShopId" Type="Int32" Nullable="false" />
+    <Property Name="InventaryId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Inventary" Relationship="Self.FK_WorkShop_Inventary_Inventary" FromRole="WorkShop_Inventary" ToRole="Inventary" />
+    <NavigationProperty Name="Workshop" Relationship="Self.FK_WorkShop_Inventary_Workshops" FromRole="WorkShop_Inventary" ToRole="Workshops" />
+  </EntityType>
+  <EntityType Name="WorkShopManager">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="WorkShopId" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="EmployeeUser" Relationship="Self.FK_WorkShopManagers_EmployeeUsers" FromRole="WorkShopManagers" ToRole="EmployeeUsers" />
+    <NavigationProperty Name="Workshop" Relationship="Self.FK_WorkShopManagers_Workshop" FromRole="WorkShopManagers" ToRole="Workshops" />
+  </EntityType>
+  <EntityType Name="Workshop">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Timelapse" Type="Int32" Nullable="false" />
+    <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUserId" Type="Int32" Nullable="false" />
+    <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="WorkShop_CalendarsVisits" Relationship="Self.FK_WorkShop_CalendarsVisits_Workshop" FromRole="Workshops" ToRole="WorkShop_CalendarsVisits" />
+    <NavigationProperty Name="WorkShop_Inventary" Relationship="Self.FK_WorkShop_Inventary_Workshops" FromRole="Workshops" ToRole="WorkShop_Inventary" />
+    <NavigationProperty Name="WorkShopManagers" Relationship="Self.FK_WorkShopManagers_Workshop" FromRole="Workshops" ToRole="WorkShopManagers" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUserRoles_AspNetUserRoles">
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRole" Multiplicity="1" />
+    <End Role="AspNetUserRoles1" Type="Self.AspNetUserRole" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles1">
+        <PropertyRef Name="UserId" />
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Blog_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="Blog" Type="Self.Blog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Blog">
+        <PropertyRef Name="EmployeeUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Blog_Multimedia_Blog">
+    <End Role="Blog" Type="Self.Blog" Multiplicity="1" />
+    <End Role="Blog_Multimedia" Type="Self.Blog_Multimedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Blog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Blog_Multimedia">
+        <PropertyRef Name="BlogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Blog_Text_Blog">
+    <End Role="Blog" Type="Self.Blog" Multiplicity="1" />
+    <End Role="Blog_Text" Type="Self.Blog_Text" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Blog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Blog_Text">
+        <PropertyRef Name="BlogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Blog_Tutorial_Blog">
+    <End Role="Blog" Type="Self.Blog" Multiplicity="1" />
+    <End Role="Blog_Tutorial" Type="Self.Blog_Tutorial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Blog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Blog_Tutorial">
+        <PropertyRef Name="BlogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Blog_Multimedia_Multimedia">
+    <End Role="Multimedia" Type="Self.Multimedia" Multiplicity="1" />
+    <End Role="Blog_Multimedia" Type="Self.Blog_Multimedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Multimedia">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Blog_Multimedia">
+        <PropertyRef Name="MultimediaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Blog_Text_Blog_Text1">
+    <End Role="Text" Type="Self.Text" Multiplicity="1" />
+    <End Role="Blog_Text" Type="Self.Blog_Text" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Text">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Blog_Text">
+        <PropertyRef Name="TextId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Blog_Tutorial_Tutorials">
+    <End Role="Tutorials" Type="Self.Tutorial" Multiplicity="1" />
+    <End Role="Blog_Tutorial" Type="Self.Blog_Tutorial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tutorials">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Blog_Tutorial">
+        <PropertyRef Name="TutorialId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendar_CalendarType">
+    <End Role="CalendarType" Type="Self.CalendarType" Multiplicity="1" />
+    <End Role="Calendar" Type="Self.Calendar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CalendarType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Calendar">
+        <PropertyRef Name="CalendarTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendar_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="Calendar" Type="Self.Calendar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Calendar">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendar_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Calendar" Type="Self.Calendar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Calendar">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendar_Visits_Calendar">
+    <End Role="Calendar" Type="Self.Calendar" Multiplicity="1" />
+    <End Role="Calendar_Visits" Type="Self.Calendar_Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Calendar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Calendar_Visits">
+        <PropertyRef Name="CalendarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendars_Devices_Calendar">
+    <End Role="Calendar" Type="Self.Calendar" Multiplicity="1" />
+    <End Role="Calendars_Devices" Type="Self.Calendars_Devices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Calendar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Calendars_Devices">
+        <PropertyRef Name="CalendarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendars_Inventary_Calendars_Inventary">
+    <End Role="Calendar" Type="Self.Calendar" Multiplicity="1" />
+    <End Role="Calendars_Inventary" Type="Self.Calendars_Inventary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Calendar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Calendars_Inventary">
+        <PropertyRef Name="IdCalendar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstitutionManager_Calendar">
+    <End Role="Calendar" Type="Self.Calendar" Multiplicity="1" />
+    <End Role="InstitutionManager" Type="Self.InstitutionManager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Calendar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InstitutionManager">
+        <PropertyRef Name="CalendarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentList_Calendar">
+    <End Role="Calendar" Type="Self.Calendar" Multiplicity="1" />
+    <End Role="StudentList" Type="Self.StudentList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Calendar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StudentList">
+        <PropertyRef Name="PersonVisitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkShop_CalendarsVisits_CalendarsVisits">
+    <End Role="Calendar" Type="Self.Calendar" Multiplicity="1" />
+    <End Role="WorkShop_CalendarsVisits" Type="Self.WorkShop_CalendarsVisits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Calendar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WorkShop_CalendarsVisits">
+        <PropertyRef Name="CalendarsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendar_Visits_Institutions">
+    <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+    <End Role="Calendar_Visits" Type="Self.Calendar_Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Institutions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Calendar_Visits">
+        <PropertyRef Name="InstitutionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendars_Devices_Devices">
+    <End Role="Devices" Type="Self.Device" Multiplicity="1" />
+    <End Role="Calendars_Devices" Type="Self.Calendars_Devices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Devices">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Calendars_Devices">
+        <PropertyRef Name="DeviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendars_Inventary_Calendars_Inventary1">
+    <End Role="Inventary" Type="Self.Inventary" Multiplicity="1" />
+    <End Role="Calendars_Inventary" Type="Self.Calendars_Inventary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Calendars_Inventary">
+        <PropertyRef Name="IdInventary" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendars_Visits_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="CalendarsVisits" Type="Self.CalendarsVisit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CalendarsVisits">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Calendars_Visits_InstitutionManagers">
+    <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+    <End Role="CalendarsVisits" Type="Self.CalendarsVisit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Institutions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CalendarsVisits">
+        <PropertyRef Name="InstitutionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CalendarsVisits_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="CalendarsVisits" Type="Self.CalendarsVisit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CalendarsVisits">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CalendarTmp_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="CalendarTmp" Type="Self.CalendarTmp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CalendarTmp">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CalendarTmp_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="CalendarTmp" Type="Self.CalendarTmp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CalendarTmp">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Countries_Regions">
+    <End Role="Regions" Type="Self.Region" Multiplicity="1" />
+    <End Role="Countries" Type="Self.Country" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Regions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Countries">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Locations_Countries">
+    <End Role="Countries" Type="Self.Country" Multiplicity="1" />
+    <End Role="Locations" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Countries">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Locations">
+        <PropertyRef Name="Contry_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Devices_Locations">
+    <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+    <End Role="Devices" Type="Self.Device" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Devices">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_Devices_Devices">
+    <End Role="Devices" Type="Self.Device" Multiplicity="1" />
+    <End Role="Files_Devices" Type="Self.Files_Devices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Devices">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Files_Devices">
+        <PropertyRef Name="DeviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeUsers_Institutions">
+    <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Institutions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeUsers">
+        <PropertyRef Name="InstitutionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeUsers_Languages">
+    <End Role="Languages" Type="Self.Language" Multiplicity="1" />
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Languages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeUsers">
+        <PropertyRef Name="LanguageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeUsers_Locations">
+    <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeUsers">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeUsers_Sexes">
+    <End Role="Sexes" Type="Self.Sex" Multiplicity="1" />
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sexes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeUsers">
+        <PropertyRef Name="SexId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ErrorReportsHardware_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="ErrorReportHardware" Type="Self.ErrorReportHardware" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ErrorReportHardware">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ErrorReportWeb_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="ErrorReportWeb" Type="Self.ErrorReportWeb" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ErrorReportWeb">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Medals_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="Medals" Type="Self.Medal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Medals">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Petition_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="Petition" Type="Self.Petition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Petition">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_Users_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="Project_Users" Type="Self.Project_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Project_Users">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Questions_Users_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="Questions_Users" Type="Self.Questions_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Questions_Users">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkShopManagers_EmployeeUsers">
+    <End Role="EmployeeUsers" Type="Self.EmployeeUser" Multiplicity="1" />
+    <End Role="WorkShopManagers" Type="Self.WorkShopManager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WorkShopManagers">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ErrorReportHardware_Locations">
+    <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+    <End Role="ErrorReportHardware" Type="Self.ErrorReportHardware" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ErrorReportHardware">
+        <PropertyRef Name="locationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ErrorReportHardware_Magniture">
+    <End Role="Magniture" Type="Self.Magniture" Multiplicity="1" />
+    <End Role="ErrorReportHardware" Type="Self.ErrorReportHardware" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Magniture">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ErrorReportHardware">
+        <PropertyRef Name="MagnitudeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ErrorReportHardware_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="ErrorReportHardware" Type="Self.ErrorReportHardware" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ErrorReportHardware">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ErrorReportsHardware_ErrorReports">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="ErrorReportHardware" Type="Self.ErrorReportHardware" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ErrorReportHardware">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ErrorReportWeb_Languages">
+    <End Role="Languages" Type="Self.Language" Multiplicity="1" />
+    <End Role="ErrorReportWeb" Type="Self.ErrorReportWeb" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Languages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ErrorReportWeb">
+        <PropertyRef Name="LanguajeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ErrorReportWeb_Magniture">
+    <End Role="Magniture" Type="Self.Magniture" Multiplicity="1" />
+    <End Role="ErrorReportWeb" Type="Self.ErrorReportWeb" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Magniture">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ErrorReportWeb">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ErrorReportWeb_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="ErrorReportWeb" Type="Self.ErrorReportWeb" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ErrorReportWeb">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_Folder">
+    <End Role="Folder" Type="Self.Folder" Multiplicity="1" />
+    <End Role="Files" Type="Self.File" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Folder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="FolderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_Projects">
+    <End Role="Projects" Type="Self.Project" Multiplicity="1" />
+    <End Role="Files" Type="Self.File" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_Prototypes1">
+    <End Role="Prototypes" Type="Self.Prototype" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.File" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prototypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="PrototypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_Devices_FilesSupports">
+    <End Role="FilesSupports" Type="Self.FilesSupport" Multiplicity="1" />
+    <End Role="Files_Devices" Type="Self.Files_Devices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FilesSupports">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Files_Devices">
+        <PropertyRef Name="FileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Folder_Folder">
+    <End Role="Folder" Type="Self.Folder" Multiplicity="1" />
+    <End Role="Folder1" Type="Self.Folder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Folder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Folder1">
+        <PropertyRef Name="FolderMainId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Folder_Projects">
+    <End Role="Projects" Type="Self.Project" Multiplicity="1" />
+    <End Role="Folder" Type="Self.Folder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Folder">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Folder_Prototypes">
+    <End Role="Prototypes" Type="Self.Prototype" Multiplicity="0..1" />
+    <End Role="Folder" Type="Self.Folder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prototypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Folder">
+        <PropertyRef Name="PrototypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Medals_Goals">
+    <End Role="Goals" Type="Self.Goal" Multiplicity="1" />
+    <End Role="Medals" Type="Self.Medal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goals">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Medals">
+        <PropertyRef Name="GoalsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prototype_HelpType">
+    <End Role="HelpType" Type="Self.HelpType" Multiplicity="1" />
+    <End Role="Prototypes" Type="Self.Prototype" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HelpType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Prototypes">
+        <PropertyRef Name="HelpTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InnovationsCenters_Locations">
+    <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+    <End Role="InnovationsCenters" Type="Self.InnovationsCenter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InnovationsCenters">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstitutionManager_PersonVisit">
+    <End Role="PersonVisit" Type="Self.PersonVisit" Multiplicity="1" />
+    <End Role="InstitutionManager" Type="Self.InstitutionManager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PersonVisit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InstitutionManager">
+        <PropertyRef Name="PersonVisitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Institutions_Locations">
+    <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+    <End Role="Institutions" Type="Self.Institution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Institutions">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inventary_InventaryCategory">
+    <End Role="InventaryCategory" Type="Self.InventaryCategory" Multiplicity="1" />
+    <End Role="Inventary" Type="Self.Inventary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InventaryCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Inventary">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkShop_Inventary_Inventary">
+    <End Role="Inventary" Type="Self.Inventary" Multiplicity="1" />
+    <End Role="WorkShop_Inventary" Type="Self.WorkShop_Inventary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WorkShop_Inventary">
+        <PropertyRef Name="InventaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Multimedia_Languages">
+    <End Role="Languages" Type="Self.Language" Multiplicity="1" />
+    <End Role="Multimedia" Type="Self.Multimedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Languages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Multimedia">
+        <PropertyRef Name="LanguajeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parraf_Languages">
+    <End Role="Languages" Type="Self.Language" Multiplicity="1" />
+    <End Role="Text" Type="Self.Text" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Languages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Text">
+        <PropertyRef Name="LanguajeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Locations_Provinces">
+    <End Role="Provinces" Type="Self.Province" Multiplicity="1" />
+    <End Role="Locations" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provinces">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Locations">
+        <PropertyRef Name="ProvinceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Petition_Multimedia_Multimedia">
+    <End Role="Multimedia" Type="Self.Multimedia" Multiplicity="1" />
+    <End Role="Petition_Multimedia" Type="Self.Petition_Multimedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Multimedia">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Petition_Multimedia">
+        <PropertyRef Name="MultimediaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentList_StudentList1">
+    <End Role="PersonVisit" Type="Self.PersonVisit" Multiplicity="1" />
+    <End Role="StudentList" Type="Self.StudentList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PersonVisit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StudentList">
+        <PropertyRef Name="PersonVisitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Petition_Multimedia_Petition">
+    <End Role="Petition" Type="Self.Petition" Multiplicity="1" />
+    <End Role="Petition_Multimedia" Type="Self.Petition_Multimedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Petition">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Petition_Multimedia">
+        <PropertyRef Name="PetitionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Petition_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Petition" Type="Self.Petition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Petition">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_Users_Projects">
+    <End Role="Projects" Type="Self.Project" Multiplicity="1" />
+    <End Role="Project_Users" Type="Self.Project_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Project_Users">
+        <PropertyRef Name="IdProject" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prototypes_Projects">
+    <End Role="Projects" Type="Self.Project" Multiplicity="1" />
+    <End Role="Prototypes" Type="Self.Prototype" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Prototypes">
+        <PropertyRef Name="ProyectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prototype_WorkingToDo">
+    <End Role="WorkingToDo" Type="Self.WorkingToDo" Multiplicity="1" />
+    <End Role="Prototypes" Type="Self.Prototype" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkingToDo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Prototypes">
+        <PropertyRef Name="WorkToDoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Questions_Users_SecurityAnswers">
+    <End Role="SecurityAnswers" Type="Self.SecurityAnswer" Multiplicity="1" />
+    <End Role="Questions_Users" Type="Self.Questions_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SecurityAnswers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Questions_Users">
+        <PropertyRef Name="AnswerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Questions_Users_SecurityQuestions">
+    <End Role="SecurityQuestions" Type="Self.SecurityQuestion" Multiplicity="1" />
+    <End Role="Questions_Users" Type="Self.Questions_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SecurityQuestions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Questions_Users">
+        <PropertyRef Name="SecurityQuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkShop_CalendarsVisits_Workshop">
+    <End Role="Workshops" Type="Self.Workshop" Multiplicity="1" />
+    <End Role="WorkShop_CalendarsVisits" Type="Self.WorkShop_CalendarsVisits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Workshops">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WorkShop_CalendarsVisits">
+        <PropertyRef Name="WorkShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkShop_Inventary_Workshops">
+    <End Role="Workshops" Type="Self.Workshop" Multiplicity="1" />
+    <End Role="WorkShop_Inventary" Type="Self.WorkShop_Inventary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Workshops">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WorkShop_Inventary">
+        <PropertyRef Name="WorkShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkShopManagers_Workshop">
+    <End Role="Workshops" Type="Self.Workshop" Multiplicity="1" />
+    <End Role="WorkShopManagers" Type="Self.WorkShopManager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Workshops">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WorkShopManagers">
+        <PropertyRef Name="WorkShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InnovationCenterDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRole" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="Blogs" EntityType="Self.Blog" />
+    <EntitySet Name="Blog_Multimedia" EntityType="Self.Blog_Multimedia" />
+    <EntitySet Name="Blog_Text" EntityType="Self.Blog_Text" />
+    <EntitySet Name="Blog_Tutorial" EntityType="Self.Blog_Tutorial" />
+    <EntitySet Name="Calendars" EntityType="Self.Calendar" />
+    <EntitySet Name="Calendar_Visits" EntityType="Self.Calendar_Visits" />
+    <EntitySet Name="Calendars_Devices" EntityType="Self.Calendars_Devices" />
+    <EntitySet Name="Calendars_Inventary" EntityType="Self.Calendars_Inventary" />
+    <EntitySet Name="CalendarsVisits" EntityType="Self.CalendarsVisit" />
+    <EntitySet Name="CalendarTmps" EntityType="Self.CalendarTmp" />
+    <EntitySet Name="CalendarTypes" EntityType="Self.CalendarType" />
+    <EntitySet Name="Configurations" EntityType="Self.Configuration" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Devices" EntityType="Self.Device" />
+    <EntitySet Name="EmployeeUsers" EntityType="Self.EmployeeUser" />
+    <EntitySet Name="ErrorReportHardwares" EntityType="Self.ErrorReportHardware" />
+    <EntitySet Name="ErrorReportWebs" EntityType="Self.ErrorReportWeb" />
+    <EntitySet Name="Files" EntityType="Self.File" />
+    <EntitySet Name="Files_Devices" EntityType="Self.Files_Devices" />
+    <EntitySet Name="FilesSupports" EntityType="Self.FilesSupport" />
+    <EntitySet Name="Folders" EntityType="Self.Folder" />
+    <EntitySet Name="Goals" EntityType="Self.Goal" />
+    <EntitySet Name="HelpTypes" EntityType="Self.HelpType" />
+    <EntitySet Name="InnovationsCenters" EntityType="Self.InnovationsCenter" />
+    <EntitySet Name="InstitutionManagers" EntityType="Self.InstitutionManager" />
+    <EntitySet Name="Institutions" EntityType="Self.Institution" />
+    <EntitySet Name="Inventaries" EntityType="Self.Inventary" />
+    <EntitySet Name="InventaryCategories" EntityType="Self.InventaryCategory" />
+    <EntitySet Name="Languages" EntityType="Self.Language" />
+    <EntitySet Name="Locations" EntityType="Self.Location" />
+    <EntitySet Name="Magnitures" EntityType="Self.Magniture" />
+    <EntitySet Name="Medals" EntityType="Self.Medal" />
+    <EntitySet Name="Multimedias" EntityType="Self.Multimedia" />
+    <EntitySet Name="PersonVisits" EntityType="Self.PersonVisit" />
+    <EntitySet Name="Petitions" EntityType="Self.Petition" />
+    <EntitySet Name="Petition_Multimedia" EntityType="Self.Petition_Multimedia" />
+    <EntitySet Name="Project_Users" EntityType="Self.Project_Users" />
+    <EntitySet Name="Projects" EntityType="Self.Project" />
+    <EntitySet Name="Prototypes" EntityType="Self.Prototype" />
+    <EntitySet Name="Provinces" EntityType="Self.Province" />
+    <EntitySet Name="Questions_Users" EntityType="Self.Questions_Users" />
+    <EntitySet Name="Regions" EntityType="Self.Region" />
+    <EntitySet Name="SecurityAnswers" EntityType="Self.SecurityAnswer" />
+    <EntitySet Name="SecurityQuestions" EntityType="Self.SecurityQuestion" />
+    <EntitySet Name="Sexes" EntityType="Self.Sex" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="StudentLists" EntityType="Self.StudentList" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Texts" EntityType="Self.Text" />
+    <EntitySet Name="Tutorials" EntityType="Self.Tutorial" />
+    <EntitySet Name="WorkingToDoes" EntityType="Self.WorkingToDo" />
+    <EntitySet Name="WorkShop_CalendarsVisits" EntityType="Self.WorkShop_CalendarsVisits" />
+    <EntitySet Name="WorkShop_Inventary" EntityType="Self.WorkShop_Inventary" />
+    <EntitySet Name="WorkShopManagers" EntityType="Self.WorkShopManager" />
+    <EntitySet Name="Workshops" EntityType="Self.Workshop" />
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUserRoles_AspNetUserRoles" Association="Self.FK_AspNetUserRoles_AspNetUserRoles">
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+      <End Role="AspNetUserRoles1" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Blog_EmployeeUsers" Association="Self.FK_Blog_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="Blog" EntitySet="Blogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Blog_Multimedia_Blog" Association="Self.FK_Blog_Multimedia_Blog">
+      <End Role="Blog" EntitySet="Blogs" />
+      <End Role="Blog_Multimedia" EntitySet="Blog_Multimedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Blog_Text_Blog" Association="Self.FK_Blog_Text_Blog">
+      <End Role="Blog" EntitySet="Blogs" />
+      <End Role="Blog_Text" EntitySet="Blog_Text" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Blog_Tutorial_Blog" Association="Self.FK_Blog_Tutorial_Blog">
+      <End Role="Blog" EntitySet="Blogs" />
+      <End Role="Blog_Tutorial" EntitySet="Blog_Tutorial" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Blog_Multimedia_Multimedia" Association="Self.FK_Blog_Multimedia_Multimedia">
+      <End Role="Multimedia" EntitySet="Multimedias" />
+      <End Role="Blog_Multimedia" EntitySet="Blog_Multimedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Blog_Text_Blog_Text1" Association="Self.FK_Blog_Text_Blog_Text1">
+      <End Role="Text" EntitySet="Texts" />
+      <End Role="Blog_Text" EntitySet="Blog_Text" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Blog_Tutorial_Tutorials" Association="Self.FK_Blog_Tutorial_Tutorials">
+      <End Role="Tutorials" EntitySet="Tutorials" />
+      <End Role="Blog_Tutorial" EntitySet="Blog_Tutorial" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendar_CalendarType" Association="Self.FK_Calendar_CalendarType">
+      <End Role="CalendarType" EntitySet="CalendarTypes" />
+      <End Role="Calendar" EntitySet="Calendars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendar_EmployeeUsers" Association="Self.FK_Calendar_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="Calendar" EntitySet="Calendars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendar_Status" Association="Self.FK_Calendar_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Calendar" EntitySet="Calendars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendar_Visits_Calendar" Association="Self.FK_Calendar_Visits_Calendar">
+      <End Role="Calendar" EntitySet="Calendars" />
+      <End Role="Calendar_Visits" EntitySet="Calendar_Visits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendars_Devices_Calendar" Association="Self.FK_Calendars_Devices_Calendar">
+      <End Role="Calendar" EntitySet="Calendars" />
+      <End Role="Calendars_Devices" EntitySet="Calendars_Devices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendars_Inventary_Calendars_Inventary" Association="Self.FK_Calendars_Inventary_Calendars_Inventary">
+      <End Role="Calendar" EntitySet="Calendars" />
+      <End Role="Calendars_Inventary" EntitySet="Calendars_Inventary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstitutionManager_Calendar" Association="Self.FK_InstitutionManager_Calendar">
+      <End Role="Calendar" EntitySet="Calendars" />
+      <End Role="InstitutionManager" EntitySet="InstitutionManagers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentList_Calendar" Association="Self.FK_StudentList_Calendar">
+      <End Role="Calendar" EntitySet="Calendars" />
+      <End Role="StudentList" EntitySet="StudentLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkShop_CalendarsVisits_CalendarsVisits" Association="Self.FK_WorkShop_CalendarsVisits_CalendarsVisits">
+      <End Role="Calendar" EntitySet="Calendars" />
+      <End Role="WorkShop_CalendarsVisits" EntitySet="WorkShop_CalendarsVisits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendar_Visits_Institutions" Association="Self.FK_Calendar_Visits_Institutions">
+      <End Role="Institutions" EntitySet="Institutions" />
+      <End Role="Calendar_Visits" EntitySet="Calendar_Visits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendars_Devices_Devices" Association="Self.FK_Calendars_Devices_Devices">
+      <End Role="Devices" EntitySet="Devices" />
+      <End Role="Calendars_Devices" EntitySet="Calendars_Devices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendars_Inventary_Calendars_Inventary1" Association="Self.FK_Calendars_Inventary_Calendars_Inventary1">
+      <End Role="Inventary" EntitySet="Inventaries" />
+      <End Role="Calendars_Inventary" EntitySet="Calendars_Inventary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendars_Visits_EmployeeUsers" Association="Self.FK_Calendars_Visits_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="CalendarsVisits" EntitySet="CalendarsVisits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Calendars_Visits_InstitutionManagers" Association="Self.FK_Calendars_Visits_InstitutionManagers">
+      <End Role="Institutions" EntitySet="Institutions" />
+      <End Role="CalendarsVisits" EntitySet="CalendarsVisits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CalendarsVisits_Status" Association="Self.FK_CalendarsVisits_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="CalendarsVisits" EntitySet="CalendarsVisits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CalendarTmp_EmployeeUsers" Association="Self.FK_CalendarTmp_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="CalendarTmp" EntitySet="CalendarTmps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CalendarTmp_Status" Association="Self.FK_CalendarTmp_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="CalendarTmp" EntitySet="CalendarTmps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Countries_Regions" Association="Self.FK_Countries_Regions">
+      <End Role="Regions" EntitySet="Regions" />
+      <End Role="Countries" EntitySet="Countries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Locations_Countries" Association="Self.FK_Locations_Countries">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Locations" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Devices_Locations" Association="Self.FK_Devices_Locations">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="Devices" EntitySet="Devices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_Devices_Devices" Association="Self.FK_Files_Devices_Devices">
+      <End Role="Devices" EntitySet="Devices" />
+      <End Role="Files_Devices" EntitySet="Files_Devices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeUsers_Institutions" Association="Self.FK_EmployeeUsers_Institutions">
+      <End Role="Institutions" EntitySet="Institutions" />
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeUsers_Languages" Association="Self.FK_EmployeeUsers_Languages">
+      <End Role="Languages" EntitySet="Languages" />
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeUsers_Locations" Association="Self.FK_EmployeeUsers_Locations">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeUsers_Sexes" Association="Self.FK_EmployeeUsers_Sexes">
+      <End Role="Sexes" EntitySet="Sexes" />
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ErrorReportsHardware_EmployeeUsers" Association="Self.FK_ErrorReportsHardware_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="ErrorReportHardware" EntitySet="ErrorReportHardwares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ErrorReportWeb_EmployeeUsers" Association="Self.FK_ErrorReportWeb_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="ErrorReportWeb" EntitySet="ErrorReportWebs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Medals_EmployeeUsers" Association="Self.FK_Medals_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="Medals" EntitySet="Medals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Petition_EmployeeUsers" Association="Self.FK_Petition_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="Petition" EntitySet="Petitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_Users_EmployeeUsers" Association="Self.FK_Project_Users_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="Project_Users" EntitySet="Project_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Questions_Users_EmployeeUsers" Association="Self.FK_Questions_Users_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="Questions_Users" EntitySet="Questions_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkShopManagers_EmployeeUsers" Association="Self.FK_WorkShopManagers_EmployeeUsers">
+      <End Role="EmployeeUsers" EntitySet="EmployeeUsers" />
+      <End Role="WorkShopManagers" EntitySet="WorkShopManagers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ErrorReportHardware_Locations" Association="Self.FK_ErrorReportHardware_Locations">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="ErrorReportHardware" EntitySet="ErrorReportHardwares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ErrorReportHardware_Magniture" Association="Self.FK_ErrorReportHardware_Magniture">
+      <End Role="Magniture" EntitySet="Magnitures" />
+      <End Role="ErrorReportHardware" EntitySet="ErrorReportHardwares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ErrorReportHardware_Status" Association="Self.FK_ErrorReportHardware_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="ErrorReportHardware" EntitySet="ErrorReportHardwares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ErrorReportsHardware_ErrorReports" Association="Self.FK_ErrorReportsHardware_ErrorReports">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="ErrorReportHardware" EntitySet="ErrorReportHardwares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ErrorReportWeb_Languages" Association="Self.FK_ErrorReportWeb_Languages">
+      <End Role="Languages" EntitySet="Languages" />
+      <End Role="ErrorReportWeb" EntitySet="ErrorReportWebs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ErrorReportWeb_Magniture" Association="Self.FK_ErrorReportWeb_Magniture">
+      <End Role="Magniture" EntitySet="Magnitures" />
+      <End Role="ErrorReportWeb" EntitySet="ErrorReportWebs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ErrorReportWeb_Status" Association="Self.FK_ErrorReportWeb_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="ErrorReportWeb" EntitySet="ErrorReportWebs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_Folder" Association="Self.FK_Files_Folder">
+      <End Role="Folder" EntitySet="Folders" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_Projects" Association="Self.FK_Files_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_Prototypes1" Association="Self.FK_Files_Prototypes1">
+      <End Role="Prototypes" EntitySet="Prototypes" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_Devices_FilesSupports" Association="Self.FK_Files_Devices_FilesSupports">
+      <End Role="FilesSupports" EntitySet="FilesSupports" />
+      <End Role="Files_Devices" EntitySet="Files_Devices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Folder_Folder" Association="Self.FK_Folder_Folder">
+      <End Role="Folder" EntitySet="Folders" />
+      <End Role="Folder1" EntitySet="Folders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Folder_Projects" Association="Self.FK_Folder_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Folder" EntitySet="Folders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Folder_Prototypes" Association="Self.FK_Folder_Prototypes">
+      <End Role="Prototypes" EntitySet="Prototypes" />
+      <End Role="Folder" EntitySet="Folders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Medals_Goals" Association="Self.FK_Medals_Goals">
+      <End Role="Goals" EntitySet="Goals" />
+      <End Role="Medals" EntitySet="Medals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prototype_HelpType" Association="Self.FK_Prototype_HelpType">
+      <End Role="HelpType" EntitySet="HelpTypes" />
+      <End Role="Prototypes" EntitySet="Prototypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InnovationsCenters_Locations" Association="Self.FK_InnovationsCenters_Locations">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="InnovationsCenters" EntitySet="InnovationsCenters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstitutionManager_PersonVisit" Association="Self.FK_InstitutionManager_PersonVisit">
+      <End Role="PersonVisit" EntitySet="PersonVisits" />
+      <End Role="InstitutionManager" EntitySet="InstitutionManagers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Institutions_Locations" Association="Self.FK_Institutions_Locations">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="Institutions" EntitySet="Institutions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inventary_InventaryCategory" Association="Self.FK_Inventary_InventaryCategory">
+      <End Role="InventaryCategory" EntitySet="InventaryCategories" />
+      <End Role="Inventary" EntitySet="Inventaries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkShop_Inventary_Inventary" Association="Self.FK_WorkShop_Inventary_Inventary">
+      <End Role="Inventary" EntitySet="Inventaries" />
+      <End Role="WorkShop_Inventary" EntitySet="WorkShop_Inventary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Multimedia_Languages" Association="Self.FK_Multimedia_Languages">
+      <End Role="Languages" EntitySet="Languages" />
+      <End Role="Multimedia" EntitySet="Multimedias" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parraf_Languages" Association="Self.FK_Parraf_Languages">
+      <End Role="Languages" EntitySet="Languages" />
+      <End Role="Text" EntitySet="Texts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Locations_Provinces" Association="Self.FK_Locations_Provinces">
+      <End Role="Provinces" EntitySet="Provinces" />
+      <End Role="Locations" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Petition_Multimedia_Multimedia" Association="Self.FK_Petition_Multimedia_Multimedia">
+      <End Role="Multimedia" EntitySet="Multimedias" />
+      <End Role="Petition_Multimedia" EntitySet="Petition_Multimedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentList_StudentList1" Association="Self.FK_StudentList_StudentList1">
+      <End Role="PersonVisit" EntitySet="PersonVisits" />
+      <End Role="StudentList" EntitySet="StudentLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Petition_Multimedia_Petition" Association="Self.FK_Petition_Multimedia_Petition">
+      <End Role="Petition" EntitySet="Petitions" />
+      <End Role="Petition_Multimedia" EntitySet="Petition_Multimedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Petition_Status" Association="Self.FK_Petition_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Petition" EntitySet="Petitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_Users_Projects" Association="Self.FK_Project_Users_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Project_Users" EntitySet="Project_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prototypes_Projects" Association="Self.FK_Prototypes_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Prototypes" EntitySet="Prototypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prototype_WorkingToDo" Association="Self.FK_Prototype_WorkingToDo">
+      <End Role="WorkingToDo" EntitySet="WorkingToDoes" />
+      <End Role="Prototypes" EntitySet="Prototypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Questions_Users_SecurityAnswers" Association="Self.FK_Questions_Users_SecurityAnswers">
+      <End Role="SecurityAnswers" EntitySet="SecurityAnswers" />
+      <End Role="Questions_Users" EntitySet="Questions_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Questions_Users_SecurityQuestions" Association="Self.FK_Questions_Users_SecurityQuestions">
+      <End Role="SecurityQuestions" EntitySet="SecurityQuestions" />
+      <End Role="Questions_Users" EntitySet="Questions_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkShop_CalendarsVisits_Workshop" Association="Self.FK_WorkShop_CalendarsVisits_Workshop">
+      <End Role="Workshops" EntitySet="Workshops" />
+      <End Role="WorkShop_CalendarsVisits" EntitySet="WorkShop_CalendarsVisits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkShop_Inventary_Workshops" Association="Self.FK_WorkShop_Inventary_Workshops">
+      <End Role="Workshops" EntitySet="Workshops" />
+      <End Role="WorkShop_Inventary" EntitySet="WorkShop_Inventary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkShopManagers_Workshop" Association="Self.FK_WorkShopManagers_Workshop">
+      <End Role="Workshops" EntitySet="Workshops" />
+      <End Role="WorkShopManagers" EntitySet="WorkShopManagers" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_EmployeeUser_Location_Retrieve" ReturnType="Collection(InnovationCenterDBModel.Sp_EmployeeUser_Location_Retrieve_Result)">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+      <Parameter Name="pRowVersion" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_EmployeeUsers_AddOrEdit">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+      <Parameter Name="pEmployeeId" Mode="In" Type="String" />
+      <Parameter Name="pName" Mode="In" Type="String" />
+      <Parameter Name="pLastName" Mode="In" Type="String" />
+      <Parameter Name="pPosition" Mode="In" Type="String" />
+      <Parameter Name="pDepartment" Mode="In" Type="String" />
+      <Parameter Name="pPhoto" Mode="In" Type="String" />
+      <Parameter Name="pInstitutionId" Mode="In" Type="Int32" />
+      <Parameter Name="pMayor" Mode="In" Type="String" />
+      <Parameter Name="pLocationId" Mode="In" Type="Int32" />
+      <Parameter Name="pSexId" Mode="In" Type="Int32" />
+      <Parameter Name="pLanguajeId" Mode="In" Type="Int32" />
+      <Parameter Name="pIsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="pRoleName" Mode="In" Type="String" />
+      <Parameter Name="pLoggedUserId" Mode="In" Type="Int32" />
+      <Parameter Name="pRowVersion" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_EmployeeUsers_Retrieve" ReturnType="Collection(InnovationCenterDBModel.Sp_EmployeeUsers_Retrieve_Result)">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+      <Parameter Name="pEmployeeId" Mode="In" Type="String" />
+      <Parameter Name="pKey" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_EmployeeUsers_SecurityQuestion_Edit">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+      <Parameter Name="SecurityQuestionId" Mode="In" Type="Int32" />
+      <Parameter Name="pSecurityQuestionAnswer" Mode="In" Type="String" />
+      <Parameter Name="pLoggedUserId" Mode="In" Type="Int32" />
+      <Parameter Name="pRowVersion" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(InnovationCenterDBModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(InnovationCenterDBModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_SecurityQuestions_Retrieve" ReturnType="Collection(InnovationCenterDBModel.Sp_SecurityQuestions_Retrieve_Result)">
+      <Parameter Name="pId" Mode="In" Type="Int32" />
+      <Parameter Name="pLoggedUserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="Sp_EmployeeUser_Location_Retrieve_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Street_Adress" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Postal_Code" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Province" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Region" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Sp_EmployeeUsers_Retrieve_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="EmployeeId" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="Position" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="Department" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="Photo" Nullable="true" />
+    <Property Type="String" Name="Institution" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Mayor" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="Sex" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Language" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="HasAspNetUser" Nullable="true" />
+    <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
+    <Property Type="String" Name="RoleId" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="RoleName" Nullable="true" MaxLength="256" />
+    <Property Type="Boolean" Name="IsAdmin" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Sp_SecurityQuestions_Retrieve_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="SecurityQuestion" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityAnswer" Nullable="true" MaxLength="50" />
+    <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
+  </ComplexType>
+</Schema>

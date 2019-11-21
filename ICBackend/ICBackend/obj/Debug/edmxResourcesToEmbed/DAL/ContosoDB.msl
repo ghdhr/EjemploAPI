@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ContosoUniversityDataModelStoreContainer" CdmEntityContainer="ContosoUniversityDataEntities1">
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="ContosoUniversityDataModel.Course">
+        <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Credits" ColumnName="Credits" />
+          <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Enrollments">
+      <EntityTypeMapping TypeName="ContosoUniversityDataModel.Enrollment">
+        <MappingFragment StoreEntitySet="Enrollment">
+          <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="ContosoUniversityDataModel.Student">
+        <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Course_Delete" FunctionName="ContosoUniversityDataModel.Store.Sp_Course_Delete" />
+    <FunctionImportMapping FunctionImportName="Sp_Course_Retrieve" FunctionName="ContosoUniversityDataModel.Store.Sp_Course_Retrieve">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ContosoUniversityDataModel.Sp_Course_Retrieve_Result">
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Credits" ColumnName="Credits" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Courses_AddOrEdit" FunctionName="ContosoUniversityDataModel.Store.Sp_Courses_AddOrEdit" />
+    <FunctionImportMapping FunctionImportName="Sp_Enrollment_AddOrEdit" FunctionName="ContosoUniversityDataModel.Store.Sp_Enrollment_AddOrEdit" />
+    <FunctionImportMapping FunctionImportName="Sp_Enrollment_Delete" FunctionName="ContosoUniversityDataModel.Store.Sp_Enrollment_Delete" />
+    <FunctionImportMapping FunctionImportName="Sp_Enrollment_Retrieve" FunctionName="ContosoUniversityDataModel.Store.Sp_Enrollment_Retrieve">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ContosoUniversityDataModel.Sp_Enrollment_Retrieve_Result">
+          <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="CourseTittle" ColumnName="CourseTittle" />
+          <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+          <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
+          <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Student_Delete" FunctionName="ContosoUniversityDataModel.Store.Sp_Student_Delete" />
+    <FunctionImportMapping FunctionImportName="Sp_Student_Retrieve" FunctionName="ContosoUniversityDataModel.Store.Sp_Student_Retrieve">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ContosoUniversityDataModel.Sp_Student_Retrieve_Result">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Student_AddOrEdit" FunctionName="ContosoUniversityDataModel.Store.Sp_Student_AddOrEdit" />
+  </EntityContainerMapping>
+</Mapping>
